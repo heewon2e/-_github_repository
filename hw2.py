@@ -28,9 +28,8 @@ def exchange(amount):
     print('10원 동전 개수:', n_10, '개')
 
 def get_integer(prompt):
-  res = int(input(prompt))
-  return res
+  int_n = int(input(prompt))
+  return int_n
 
 amount = get_integer("동전으로 교환하고자 하는 금액은?")
-# 동전으로 교환
 exchange(amount)
