@@ -10,11 +10,15 @@ Original file is located at
 def get_fixed_price(d):
   r = d*100/(100-disc_r)
   return r
+    
+#disc_r is dsicount rate
+#d_A, d_B is the original price of the product
 
 disc_r = int(input("할인율은?"))
 d_A = int(input("A 상품의 할인된 가격은?"))
 d_B = int(input("B 상품의 할인된 가격은?"))
 
+# pbd is price before discount
 pbd_A = get_fixed_price(d_A)
 pbd_B = get_fixed_price(d_B)
 
