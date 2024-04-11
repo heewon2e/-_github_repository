@@ -32,6 +32,3 @@ nums = input("세 자리 정수 입력 :")
 
 kor_digits = read_number(nums)
 print(kor_digits)
-
-k_num = '일이삼사오육칠팔구'
-print(k_num[-1])
