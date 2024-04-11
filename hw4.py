@@ -7,52 +7,7 @@ Original file is located at
     https://colab.research.google.com/drive/1o0wPwwtGvPK8S1H5JFMqYFa-O6ywI4VK
 """
 
-def rep_char(c, n):
-  return c*n
 
-
-print(rep_char('-', 5))
-
-def draw_line_stirng(stirng):
-  line = rep_char('-', len(string)*2)
-
-def rep_char(c, n):
-    # 문자 c를 n번 반복해서 반환
-    return c * n
-
-def draw_line_string(string):
-    # 문자열 위아래에 박스선을 그리고 문자열을 출력
-    line = rep_char('-', len(string) * 3)
-    print(line)
-    print(string.center(5))
-    print(line)
-
-# 연습문제 6.4의 동작 확인
-print(rep_char('-', 10))  # ----------
-print(rep_char('#', 5))    # #####
-
-# 연습문제 6.5의 동작 확인
-draw_line_string('안녕하세요')
-draw_line_string('안녕')
-
-def rep_char(c, n):
-    # 문자 c를 n번 반복해서 반환
-    return c * n
-
-def draw_line_string(string):
-    # 문자열 위아래에 박스선을 그리고 문자열을 출력
-    line = rep_char('-', len(string) * 3)
-    print(line)
-    print(' {} '.format(string.center(len(string) * 3 - 2)))  # 문자열을 가운데 정렬하여 공백을 추가
-    print(line)
-
-# 연습문제 6.4의 동작 확인
-print(rep_char('-', 10))  # ----------
-print(rep_char('#', 5))    # #####
-
-# 연습문제 6.5의 동작 확인
-draw_line_string('안녕하세요')
-draw_line_string('안녕')
 
 def draw_line_string(msg1, msg2, nstr):
   line = rep_char('-', nstr*2)
@@ -67,6 +22,9 @@ msg1 = 'Hello ' + hello_gyopo+','
 msg2 = "welcome to Seoul"
 nstr = len(msg1) if (len(msg1)>len(msg2)) else len(msg2)
 draw_line_string(msg1, msg2, nstr)
+
+
+# Max 사용
 
 def draw_line_string(msg1, msg2, nstr):
   line = rep_char('-', nstr*2)
