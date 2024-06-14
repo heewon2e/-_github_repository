@@ -1,0 +1,221 @@
+def buy(shopping_bag):
+    item = input("상품명? ")
+    if item == '':
+        return False
+    quantity = int(input("수량은? "))
+    price = float(input("가격은? "))
+    shopping_bag[item] = {'quantity': quantity, 'price': price}
+    print(f'장바구니에 {item} {quantity}개가 담겼습니다. (가격: {price}원)\n')
+    return True
+
+def show(shopping_bag):
+    print('\n>>>> 장바구니 보기 :')
+    for item, details in shopping_bag.items():
+        print(f"{item}: {details['quantity']}개 (가격: {details['price']}원)")
+    print()
+
+def find(shopping_bag):
+    while True:
+        print('[검색]')
+        search_item = input("장바구니에서 확인하고자 하는 상품은? ")
+        if search_item == '':
+            print("프로그램을 종료합니다.")
+            break
+        elif search_item in shopping_bag:
+            details = shopping_bag[search_item]
+            print(f"{search_item}은(는) {details['quantity']}개 담겨 있으며, 가격은 {details['price']}원입니다.")
+        else:
+            print("해당 상품이 장바구니에 없습니다. 다시 입력해 주세요.")
+
+def calculate_total(shopping_bag):
+    total_price = 0
+    for details in shopping_bag.values():
+        total_price += details['quantity'] * details['price']
+    return total_price
+
+shopping_bag = {}
+while True:
+    if buy(shopping_bag) == False:
+        break
+
+show(shopping_bag)
+find(shopping_bag)
+
+total_price = calculate_total(shopping_bag)
+print(f'\n장바구니 총 가격: {total_price}원')
+
+#2.
+import math
+
+class Point:
+    def __init__(self, x=0, y=0):
+        self.__x = x
+        self.__y = y
+
+    def show(self):
+        print(f'({self.__x}, {self.__y})')
+
+    def set(self, x, y):
+        self.__x = x
+        self.__y = y
+
+    def get(self):
+        return (self.__x, self.__y)
+
+class Rectangle:
+    def __init__(self, x1, y1, x2, y2):
+        self.lt = Point(x1, y1)
+        self.rb = Point(x2, y2)
+
+    def show(self):
+        lt_coords = self.lt.get()
+        rb_coords = self.rb.get()
+        print(f'좌측 상단 꼭지점이 {lt_coords}이고 우측 하단 꼭지점이 {rb_coords}인 사각형입니다.')
+
+    def getWidth(self):
+        return self.rb.get()[0] - self.lt.get()[0]
+
+    def getHeight(self):
+        return self.rb.get()[1] - self.lt.get()[1]
+
+    def getArea(self):
+        return self.getWidth() * self.getHeight()
+
+    def getPerimeter(self):
+        return 2 * (self.getWidth() + self.getHeight())
+
+    def getDiagonal(self):
+        width = self.getWidth()
+        height = self.getHeight()
+        return math.sqrt(width**2 + height**2)
+
+if __name__ == '__main__':
+    r1 = Rectangle(5, 5, 20, 10)
+    a = r1.getArea()
+    p = r1.getPerimeter()
+    d = r1.getDiagonal()
+    r1.show()
+    print(f'\n넓이는 {a}, 둘레는 {p}, 대각선 길이는 {d:.2f}')
+
+
+
+#3. 
+import tkinter as tk
+from tkinter import messagebox
+import os
+
+class WordBookApp:
+    def __init__(self, root):
+        self.root = root
+        root.title("Word Book")
+
+        # Dictionary to store words and their meanings
+        self.word_dict = self.load_words()
+
+        # Word entry
+        self.label_word = tk.Label(root, text="단어:")
+        self.label_word.grid(row=0, column=0, padx=10, pady=5, sticky="e")
+        self.entry_word = tk.Entry(root)
+        self.entry_word.grid(row=0, column=1, padx=10, pady=5)
+
+        # Buttons next to word entry
+        self.button_search = tk.Button(root, text="검색", command=self.search_word)
+        self.button_search.grid(row=0, column=2, padx=5, pady=5)
+
+        self.button_add = tk.Button(root, text="추가", command=self.add_word)
+        self.button_add.grid(row=0, column=3, padx=5, pady=5)
+
+        # Meaning entry
+        self.label_meaning = tk.Label(root, text="뜻:")
+        self.label_meaning.grid(row=1, column=0, padx=10, pady=5, sticky="e")
+        self.entry_meaning = tk.Entry(root, width=50)
+        self.entry_meaning.grid(row=1, column=1, columnspan=3, padx=10, pady=5)
+
+        # Update and Delete buttons
+        self.button_update = tk.Button(root, text="수정", command=self.update_word)
+        self.button_update.grid(row=2, column=2, padx=5, pady=5)
+
+        self.button_delete = tk.Button(root, text="삭제", command=self.delete_word)
+        self.button_delete.grid(row=2, column=3, padx=5, pady=5)
+
+        # Buttons at the bottom
+        self.button_clear = tk.Button(root, text="초기화", command=self.clear_fields)
+        self.button_clear.grid(row=3, column=0, padx=10, pady=10, sticky="w")
+
+        self.button_quit = tk.Button(root, text="종료", command=self.quit_program)
+        self.button_quit.grid(row=3, column=1, padx=10, pady=10, sticky="w")
+
+    def load_words(self):
+        if os.path.exists("words.txt"):
+            with open("words.txt", "r", encoding="utf-8") as file:
+                word_dict = {}
+                for line in file:
+                    word, meaning = line.strip().split(':')
+                    word_dict[word] = meaning
+                return word_dict
+        else:
+            return {}
+
+    def save_words(self):
+        with open("words.txt", "w", encoding="utf-8") as file:
+            for word, meaning in self.word_dict.items():
+                file.write(f"{word}:{meaning}\n")
+
+    def add_word(self):
+        word = self.entry_word.get().strip()
+        meaning = self.entry_meaning.get().strip()
+
+        if word and meaning:
+            self.word_dict[word] = meaning
+            messagebox.showinfo("추가 확인", f"단어 '{word}'를 추가했습니다.")
+            self.clear_fields()
+        else:
+            messagebox.showwarning("입력 오류", "단어와 뜻을 모두 입력하세요.")
+
+    def search_word(self):
+        word = self.entry_word.get().strip()
+        if word in self.word_dict:
+            meaning = self.word_dict[word]
+            self.entry_meaning.delete(0, tk.END)
+            self.entry_meaning.insert(0, meaning)
+            messagebox.showinfo("검색 결과", f"단어: {word}\n뜻: {meaning}")
+        else:
+            messagebox.showwarning("검색 오류", f"단어 '{word}'를 찾을 수 없습니다.")
+
+    def update_word(self):
+        word = self.entry_word.get().strip()
+        meaning = self.entry_meaning.get().strip()
+
+        if word in self.word_dict:
+            if meaning:
+                self.word_dict[word] = meaning
+                messagebox.showinfo("수정 확인", f"단어 '{word}'의 뜻을 수정했습니다.")
+                self.clear_fields()
+            else:
+                messagebox.showwarning("입력 오류", "수정할 뜻을 입력하세요.")
+        else:
+            messagebox.showwarning("수정 오류", f"단어 '{word}'를 찾을 수 없습니다.")
+
+    def delete_word(self):
+        word = self.entry_word.get().strip()
+
+        if word in self.word_dict:
+            del self.word_dict[word]
+            messagebox.showinfo("삭제 확인", f"단어 '{word}'를 삭제했습니다.")
+            self.clear_fields()
+        else:
+            messagebox.showwarning("삭제 오류", f"단어 '{word}'를 찾을 수 없습니다.")
+
+    def clear_fields(self):
+        self.entry_word.delete(0, tk.END)
+        self.entry_meaning.delete(0, tk.END)
+
+    def quit_program(self):
+        self.save_words()
+        self.root.quit()
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = WordBookApp(root)
+    root.mainloop()
+
