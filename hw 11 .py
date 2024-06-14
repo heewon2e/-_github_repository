@@ -63,4 +63,9 @@ if __name__ == "__main__":
     app = WordBookApp(root)
     root.mainloop()
 
+#단어 입력 필드: label_word와 entry_word를 사용하여 단어를 입력
+#검색 및 추가 버튼: 단어 입력 필드 옆에 button_search와 button_add를 나란히 배치
+#뜻 입력 필드: label_meaning과 entry_meaning을 사용하여 뜻을 입력. entry_meaning은 width=50으로 설정하여 길게 배치
+# 초기화 및 종료 버튼: 왼쪽 하단에 button_clear와 button_quit를 나란히 배치
+
 
